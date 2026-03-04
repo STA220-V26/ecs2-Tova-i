@@ -45,24 +45,33 @@ if (!fs::file_exists("data.zip")) {
 # Help: https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
 list(
-# make the zipdata object refer to the data.zip file path
+  # make the zipdata object refer to the data.zip file path
   tar_target(zipdata, "data.zip", format = "file"),
 
   # TODO: Something related to zip should be added here:
   #tar_target(csv_files, zip::unzip(zipdata))
-  tar_target(csv_files, zip::unzip(zipdata))
+  tar_target(csv_files, zip::unzip(zipdata)),
   # we are unziping the data 
 
-  # TODO: uncomment this section when instructed
-  # tar_map(
-  #  values = tibble::tibble(path = dir("data-fixed", full.names = TRUE)) |>
-  #    dplyr::mutate(name = tools::file_path_sans_ext(basename(path))),
-  #  tar_target(dt, fread(path)),
-  #  names = name,
-  #  descriptions = NULL
-  #),
+  tar_map(
+  values=tibble::tibble(path = dir("data-fixed", full.names = TRUE)) |>
+      dplyr::mutate(name = tools::file_path_sans_ext(basename(path))),
+    tar_target(dt, fread(path)),
+    names = name,
+    descriptions = NULL
+  ),
+
+  #extract data from file path which is data -fixed, and create a data table which we 
+  # include values from data fixed and we extract the full-names. 
+  #then we call on path 
+  #Values is the data set with names and data and manipulate file-paths 
 
   # TODO: something related to codebook should be added here
+   tar_target(codebook, _____())
+  #tar_source #is to load helper functions
+  #get_codebook() #is to extract meta data about variables 
 
   # TODO: Something related to data_scans should be added here
+ 
+
 )
