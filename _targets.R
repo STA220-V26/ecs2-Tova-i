@@ -45,11 +45,13 @@ if (!fs::file_exists("data.zip")) {
 # Help: https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
 list(
-  # make the zipdata object refer to the data.zip file path
-  tar_target(zipdata, "data.zip", format = "file")
+# make the zipdata object refer to the data.zip file path
+  tar_target(zipdata, "data.zip", format = "file"),
 
   # TODO: Something related to zip should be added here:
-  # And this comment should be replaced by something more useful
+  #tar_target(csv_files, zip::unzip(zipdata))
+  tar_target(csv_files, zip::unzip(zipdata))
+  # we are unziping the data 
 
   # TODO: uncomment this section when instructed
   # tar_map(
